@@ -14,7 +14,7 @@ jobs:
         with:
           python-version: '3.11'
       - name: Install Tools
-        run: pip install newsapi-python google-generativeai requests
+        run: pip install newsapi-python google-genai requests
       - name: Execute Agent
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
