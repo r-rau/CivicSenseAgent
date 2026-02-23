@@ -1,7 +1,7 @@
 import os
 import requests
 from newsapi import NewsApiClient
-import google.genai as genai
+from google import genai
 
 # Load Secrets from GitHub Environment
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
