@@ -18,7 +18,7 @@ def send_to_telegram(text, image_url=None):
 
 def run_agent():
     newsapi = NewsApiClient(api_key=NEWS_API_KEY)
-    genai.configure(api_key=GEMINI_API_KEY)
+    client = genai.Client(api_key=GEMINI_API_KEY)
     model = genai.GenerativeModel('gemini-2.0-flash')
 
     # 1. Search for Civic News
