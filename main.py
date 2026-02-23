@@ -27,6 +27,9 @@ def run_agent():
     if articles['articles']:
         art = articles['articles'][0]
         
+        # 3. Define the PROMPT (Must be defined BEFORE use)
+        prompt = f"Analyze this civic event: {art['title']}. Provide: 1. Summary 2. SEO Tags. 3. Image Prompt."
+        
         # 3. NEW STYLE GENERATION
         # Use 'client.models.generate_content'
         response = client.models.generate_content(
