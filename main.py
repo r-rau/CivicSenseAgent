@@ -1,32 +1,27 @@
 import os
 import requests
 from newsapi import NewsApiClient
-from google import genai
+from google import genai  # THE NEW STYLE IMPORT
 
-# Load Secrets from GitHub Environment
+# Load Secrets
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
 TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 NEWS_API_KEY = os.getenv("NEWS_API_KEY")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
-def send_to_telegram(text, image_url=None):
-    base_url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/"
-    if image_url:
-        requests.post(base_url + "sendPhoto", data={"chat_id": TELEGRAM_CHAT_ID, "caption": text, "photo": image_url, "parse_mode": "Markdown"})
-    else:
-        requests.post(base_url + "sendMessage", data={"chat_id": TELEGRAM_CHAT_ID, "text": text, "parse_mode": "Markdown"})
-
 def run_agent():
-    newsapi = NewsApiClient(api_key=NEWS_API_KEY)
+    # 1. NEW STYLE SETUP: Create the Client
+    # It automatically looks for 'GEMINI_API_KEY' in your environment!
     client = genai.Client(api_key=GEMINI_API_KEY)
-    model = genai.GenerativeModel('gemini-2.0-flash')
+    newsapi = NewsApiClient(api_key=NEWS_API_KEY)
 
-    # 1. Search for Civic News
+    # 2. Get News
     query = '(civic sense OR "public etiquette") AND (failure OR learning)'
     articles = newsapi.get_everything(q=query, language='en', sort_by='relevancy', page_size=1)
 
-    if articles['articles']:
+    if articles.get('articles'):
         art = articles['articles'][0]
+        prompt = f"Analyze this civic event: {art['title']}. Provide: 1. Summary 2. SEO Tags. 3. Image Prompt."
         
         # 3. NEW STYLE GENERATION
         # Use 'client.models.generate_content'
@@ -35,9 +30,13 @@ def run_agent():
             contents=prompt
         )
         
-        # 3. Output
+        # 4. Output
         report = f"*Daily Civic Report*\n\n{response.text}"
-        send_to_telegram(report) # Add image logic if you have an OpenAI/Imagen key!
+        base_url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
+        requests.post(base_url, data={"chat_id": TELEGRAM_CHAT_ID, "text": report, "parse_mode": "Markdown"})
+    else:
+        print("No news found.")
 
 if __name__ == "__main__":
     run_agent()
+    
