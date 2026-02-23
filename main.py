@@ -28,9 +28,12 @@ def run_agent():
     if articles['articles']:
         art = articles['articles'][0]
         
-        # 2. Logic & Summarization
-        prompt = f"Analyze this civic event: {art['title']}. Provide: 1. Summary of Failure vs Learning 2. SEO Tags. 3. A DALL-E style image prompt."
-        response = model.generate_content(prompt)
+        # 3. NEW STYLE GENERATION
+        # Use 'client.models.generate_content'
+        response = client.models.generate_content(
+            model="gemini-2.0-flash", 
+            contents=prompt
+        )
         
         # 3. Output
         report = f"*Daily Civic Report*\n\n{response.text}"
