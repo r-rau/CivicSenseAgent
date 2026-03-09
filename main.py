@@ -24,8 +24,9 @@ def run_agent():
     newsapi = NewsApiClient(api_key=NEWS_API_KEY)
     client = genai.Client(api_key=GEMINI_API_KEY)
 
-    # Search for Indian Civic News
-    query = '(civic sense OR "public etiquette" OR "civic apathy") AND (India OR Nagpur OR Maharashtra OR Mumbai)'
+    # Hyper-targeted query: Includes specific civic issues, explicitly EXCLUDES all political keywords
+    query = '("civic sense" OR "public etiquette" OR "road safety" OR "waste management" OR "public nuisance" OR potholes OR vandalism) AND (India OR Indian States OR Indian cities) -election -politics -vote -poll -campaign -politician'
+
     
     # FETCH EXACTLY 10 ARTICLES
     articles = newsapi.get_everything(q=query, language='en', sort_by='relevancy', page_size=10)
