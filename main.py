@@ -29,8 +29,7 @@ def run_agent():
     query = (
         '("civic sense" OR "traffic rule" OR "waste management" OR "civic issue" '
         'OR "garbage dump" OR "pothole" OR "illegal parking" OR "public nuisance" OR "public etiquette") '
-        'AND (India OR Delhi OR Bengaluru OR Mumbai OR Chennai OR Kolkata OR Hyderabad OR Pune) '
-        '-election -politics -murder -rape -bollywood -cricket -stock -share -market -movie'
+        '-election -politics -bollywood -cricket'
     )
 
     # 2. National Indian News Domains
