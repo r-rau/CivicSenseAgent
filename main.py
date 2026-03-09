@@ -27,8 +27,8 @@ def run_agent():
     # Search for Indian Civic News
     query = '(civic sense OR "public etiquette" OR "civic apathy") AND (India OR Nagpur OR Maharashtra OR Mumbai)'
     
-    # FETCH EXACTLY 5 ARTICLES
-    articles = newsapi.get_everything(q=query, language='en', sort_by='relevancy', page_size=5)
+    # FETCH EXACTLY 10 ARTICLES
+    articles = newsapi.get_everything(q=query, language='en', sort_by='relevancy', page_size=10)
 
     if not articles.get('articles'):
         print("No news found.")
