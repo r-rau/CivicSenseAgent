@@ -34,9 +34,9 @@ def run_agent():
         try:
             prompt = f"Summarize this civic event for a Nagpur audience: {art['title']}. Add a lesson on public etiquette."
             
-            # Using Gemini 3 Flash (Free Tier)
+            # Using Gemini 2.5 (Free Tier)
             response = client.models.generate_content(
-                model="gemini-3-flash", 
+                model="gemini-2.5-flash", 
                 contents=prompt
             )
             
